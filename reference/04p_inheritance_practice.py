@@ -1,8 +1,10 @@
-# optional stuff that will clear the window each time you run it.
 import os
 import platform
 
 def clear_screen():
+    """
+    Clears the terminal screen to make it easier to follow along with code.
+    """
     if platform.system() == 'Windows':
         os.system('cls')
     else:
@@ -10,15 +12,13 @@ def clear_screen():
 
 clear_screen()
 
-###########################
-# START READING HERE
-###########################
+# ====================
+# INHERITANCE PRACTICE
+# ====================
 
-### Inheritance Practice
 
-'''
-You are given this code for Books and LibraryMembers:
-'''
+# 1. PRACTICE:
+# You are given this code for Books and LibraryMembers:
 
 class Book:
     def __init__(self, title, author):
@@ -49,17 +49,19 @@ class LibraryMember:
         else:
             print(f"{self.name} cannot return a book they haven't checked out.")
 
-'''
-YOUR TASK:
-Create a new class called PremiumLibraryMembers.
-They should be the same as LibraryMembers, except they also have an instance variable called
-"check_out_limit". The default is 5, but can be increased beyond that potentially.
 
-This means that when they try to check out a book, they should use their check_out_limit variable as the limit
-instead of the standard 3 that is applied to normal Library Members.
+# YOUR TASK:
+# Create a new class called PremiumLibraryMembers.
+# They should be the same as LibraryMembers, except they also have an instance
+# variable called "check_out_limit". The default is 5, but can be increased
+# beyond that potentially.
 
-Write the functionality for this and make a LibraryMember and PremiumLibraryMember object to test the functionality.
-'''
+# This means that when they try to check out a book, they should use their
+# check_out_limit variable as the limit
+# instead of the standard 3 that is applied to normal Library Members.
+
+# Write the functionality for this and make a LibraryMember and
+# PremiumLibraryMember object to test the functionality.
 
 class PremiumLibraryMember(LibraryMember):
     def __init__(self, name, check_out_limit=5):
@@ -97,7 +99,7 @@ member.check_out_book(book4)  # Should not be allowed
 premium_member.check_out_book(book4)
 premium_member.check_out_book(book5)
 premium_member.check_out_book(book6)
-premium_member.check_out_book(book1)  # Should be allowed as book1 is already checked out and not available
+premium_member.check_out_book(book1)  # Should not be allowed as book1 is already checked out and not available
 
 # Returning books
 member.return_book(book1)

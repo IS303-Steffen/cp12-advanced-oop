@@ -1,8 +1,10 @@
-# optional stuff that will clear the window each time you run it.
 import os
 import platform
 
 def clear_screen():
+    """
+    Clears the terminal screen to make it easier to follow along with code.
+    """
     if platform.system() == 'Windows':
         os.system('cls')
     else:
@@ -10,37 +12,52 @@ def clear_screen():
 
 clear_screen()
 
-###########################
-# START READING HERE
-###########################
+# ====================================
+# OVERVIEW OF 3 OBJECT DESIGN PATTERNS
+# ====================================
 
-# GENERAL IDEA OF Chapter 16:
-# Three design patterns in how classes interact:
 '''
-    ASSOCIATION (the umbrella term)
-    An instance variable of one class holds an object of another class:
-        1. Aggregation
-            You define 2 classes, have 1 object (or more) from each class.
-            In one class you store an EXISTING object in an instance variable of a different object
-            The 2 objects are related, but independent.
+OVERVIEW
+--------
+There are 3 main design patterns of how classes interact:
 
-        2. Composition 
-            You define 2 classes. In one class you CREATE a new object of another class IN the 1st class's constructor
-            The object you created only exists as part of the first class.
 
-    INHERITANCE
+ASSOCIATION (the umbrella term)
+-------------------------------
+An instance variable of one class holds an object of another class:
 
-        3. Inheritance 
-            You have a super class (aka a parent class) and a sub class (the child class)
-            The child class gets any variables and methods from the parents,
-            but can customize (override) any methods or variables from the parent.
+1. Aggregation
+    - You define 2 classes, have 1 object (or more) from each class.
+    - In one class you store an EXISTING object in an instance variable of a
+      different object.
+    - The 2 objects are related, but independent.
+
+2. Composition 
+    - You define 2 classes.
+    - In one class you CREATE a new object of another class INSIDE the 1st
+      class's (often in the constructor).
+    - The object you created only exists as part of the first class.
+
+INHERITANCE
+-----------
+
+3. Inheritance 
+    - You have a super class (aka the parent class) and a sub class (the child
+      class).
+    - The child class gets all variables and methods from the parents,
+      but can customize (override) any methods or variables from the parent.
+
+
+You can see brief examples of all three below
 '''
 
-#########
-# AGGREGATION
-#########
+
+# ===================
+# AGGREGATION EXAMPLE
+# ===================
+
 '''
-2 separate objects. One gets stored in the other
+Notice the Book objects are created before being put in the Library object.
 '''
 
 class Book:
@@ -51,27 +68,25 @@ class Library:
     def __init__(self, list_of_books):
         self.list_of_books = list_of_books  # Library has-a list of Book objects
 
-# Instantiation
 book1 = Book("Fahrenheit 451") # book object
 book2 = Book("Brave New World") # book object
 list_of_books = [book1, book2]
 library = Library(list_of_books) # creating a Library object. It contains book objects
 
-# Key point:
-# I can still access the original book data:
+''' KEY POINT: I can still access the original book data: '''
 print(book1.title)
 
-# But I can also access the book through the library object:
+''' BUT, I can also access the book through the library object: '''
 print(library.list_of_books[0].title)
 
 
-#########
+# ===========
 # COMPOSITION
-#########
+# ===========
 
 '''
-1 object is created inside of the other. The inner object can only be accessed
-through the outer object.
+Notice LibraryCard object is created INSIDE the LibraryMember class. It can
+only be accessed through LibraryMember.
 '''
 import random as r
 
@@ -84,30 +99,30 @@ class LibraryMember:
         self.name = name
         self.library_card = LibraryCard(r.randint(1,100000)) 
 
-# Instantiation
-# LibraryMember is created, but notice that a LibraryCard will be created inside!
 member = LibraryMember("Bob") 
 
-# That means I can ONLY access the LibraryCard object THROUGH the LibraryMember object
+''' You get to the LibraryCard through the LibraryMember '''
 print(member.name)  # Bob
 print(member.library_card.card_number) # 
 
-# This wouldn't work:
+''' This wouldn't work '''
 #print(library_card.card_number)
 
 
-#########
+# ===========
 # INHERITANCE
-#########
+# ===========
 
 '''
-1 object is created inside of the other. The inner object can only be accessed
-through the outer object.
+Notice that Librarian has LibraryMember in parentheses next to its class 
+definition.
 '''
 
 class LibraryMember:
+    library_name = "Provo Library"
+
     def __init__(self, name):
-        self.name = name
+        self.name = nameß
 
     def describe_role(self):
         return f"{self.name} is a library member."
@@ -120,13 +135,19 @@ class Librarian(LibraryMember):  # Inherits from LibraryMember
     def describe_role(self):
         return f"{self.name} is a librarian with employee ID: {self.employee_id}."
 
-# Instantiation
+''' Creating an instance of the parent class and the child class '''
 member = LibraryMember("Bob")
 librarian = Librarian("Alice", "001")
+
+''' notice I'm accessing variables from the parent in the child, even though
+    the child never had them created '''
+print(librarian.library_name)
+
 list_of_members_and_librarians = [member, librarian]
 
-# Inheritance allows for the concept of "polymorphism". 
-# describe_role has different logic depending on if the parent or child calls it, but it has the same name.
+''' Inheritance allows for the concept of "polymorphism". 
+    describe_role has different logic depending on if the parent or child calls
+    it, but it has the same name. '''
 for object in list_of_members_and_librarians:
     print(object.describe_role())
 

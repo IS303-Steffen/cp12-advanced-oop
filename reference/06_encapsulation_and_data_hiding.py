@@ -14,6 +14,11 @@ clear_screen()
 # START READING HERE
 ###########################
 
+##### NEW NOTE####
+# add the example of the library book here and how the list of books should be
+# private so that the logic of adding and returnig books is preserved.
+
+
 # Data Hiding
 
 # Note, this is quite important in other languages

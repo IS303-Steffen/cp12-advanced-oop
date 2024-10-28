@@ -1,8 +1,10 @@
-# optional stuff that will clear the window each time you run it.
 import os
 import platform
 
 def clear_screen():
+    """
+    Clears the terminal screen to make it easier to follow along with code.
+    """
     if platform.system() == 'Windows':
         os.system('cls')
     else:
@@ -10,98 +12,121 @@ def clear_screen():
 
 clear_screen()
 
-###########################
-# START READING HERE
-###########################
-
-# GENERAL IDEA OF Chapter 16:
-# classes can interact in 3 ways (basically)
-'''
-    Instance variable of a class is an object:
-        1. You define 2 classes. In one class you PASS an existing object into the constructor
-            The 2 objects are related, but independent.
-
-        2. You define 2 classes. In one class you CREATE a new object in the constructor
-            The object you created only exists as part of the first class.
-
-    Class inheritance
-
-        3. You have a super class (like a father or mother class) and a sub class (the child class)
-            The child class gets any variables and methods from the parents, but can customize (override) any methods or variables from the parent.
+# ===========
+# INHERITANCE
+# ===========
 
 '''
+OVERVIEW
+--------
+Inheritance is when you have a child class "inherit" variables and methods
+from a parent class.
 
+WHY DO THIS?
+------------
+- Reuse code!
+    Let's say you have 2 similar but different classes. If you make them both
+    inherit from the same parent class, then you just have to write the code
+    that applies to both child classes once.
+- Fewer places to update
+    Extending the previous example, what if you needed to update the
+    functionality of the 2 child classes? Because of inheritance you can just
+    update the code in one place (the parent class) and have it apply to the
+    children automatically
+- Logical Structure!
+    If you use inheritance well it can lend itself towards an easier to
+    understand structure of your code that mimics real-life logic.
 
-# This is an example of #3. We have an Employee and a Manager.
-# A Manager is also an Employee, but a more specific type of Employee.
+KEY POINTS
+----------
 
-# Main things to remember:
-'''
-    1. Super class is the parent
+1. Super class is the parent
 
-    2. Sub class is the child
+2. Sub class is the child
 
-    3. To specify a super class, put the class name in parentheses.
-        - class Manager(Employee):
+3. To specify a super class, put the class name in parentheses.
+    - class Manager(Employee):
 
-    4. Sub class gets access to all class variables and methods from the super class
+4. Sub class gets access to all variables and methods from the super class.
 
-    5. If you write a method or variable in the SUB class that has the same name
-        as the SUPER class, the SUB class will OVERRIDE the super class. This is also called polymorphism.
+5. If you write a method or variable in the SUB class that has the same name
+    as the SUPER class, the SUB class will OVERRIDE the super class. This is
+    referred to as polymorphism.
 
-    6. If you are:
-            1: in a sub class
-            2: are in a method that is overwritten (has the same name as method in the super class)
-            3: want to call the super class version of that method instead of the sub class version
-        THEN:
-            you can use super().methodName() to call the method of the super class
+6. If you are:
+    1: in a sub class
+    2: are in a method that is overridden (has the same name as method in the
+       super class)
+    3: want to call the super class version of that method instead of the sub
+       class version
+    THEN:
+        you can use super().methodName() to call the method of the super class
 
-    6.1 IMPLICATION FOR __init__
-        every class calls __init__ whether you write it out or not. If you want the sub class
-        to have the same instance variables as the super class, you must call super().__init__(self, any other variables)
+6.1 IMPLICATION FOR __init__
+    every class calls __init__ whether you write it out or not. If you want
+    the sub class to have the same instance variables as the super class,
+    you must call super().__init__(self, any other variables)
 
-'''
-
-# Inheritance Follow-along Practice
-# You'll create classes for Employees and Managers, with Managers inheriting from Employees
-
-
-'''
-PART 1:
-Write an employee class:
-    class variable:
-        company_name
-    
-    instance variables:
-        name
-        salary
-    
-    methods:
-        - constructor
-        - get_status: returns or prints what their name is and their salary
-        - give_raise: increase their salary by a passed in amount
-
-    create an employee object, and run get_status and give_raise
-
+PRACTICE
+--------
+We have an Employee and a Manager. A Manager is also an Employee, but a more
+specific type of Employee.
 '''
 
 
+# PART 1: DEFINE AN EMPLOYEE CLASS
+# class variable:
+#   company_name
+#
+# instance variables:
+#   name
+#   salary
+#
+# methods:
+#   constructor
+#   get_status: returns their name and their salary
+#   give_raise: increase their salary by a passed in amount. If a raise over
+#               20k is given, limit the raise amount to just 20k
+#     
+# Create an employee object, and run get_status and give_raise
+
+
+
+# PART 2.1: DEFINE A MANAGER CLASS
+# Write a Manager class that inherits from Employee. Just put "pass" the line
+# after "class" and don't put anything else in the class. Then create a 
+# Manager object and try to access a variable or method from Employee.
+
 '''
-PART 2:
-
-write a Manager class that inherits from employee
-
-    methods:
-        - constructor: override the constructor, call the employee constructor through super(). 
-                managers should also have an instance variable for "department" to show which department they are managing.
-
-        - give_raise: override the inherited version. Make it so that managers can also get a bonus, which is a default of 10% added to whatever
-                        the raise amount is.
-                Note: if we have time, discuss using or not using super() in a situation like this.
-
-        - give_praise: a method that only exists for the manager. Recieves an employee object and then just says "You're doing great, {employee name}"
-
-
-create a manager object and run all the relevant methods on it. Make sure that when giving it a raise, it also gets the increased amount.
+TIP
+---
+pass is a statement in Python that does literally nothing. It is nice sometimes
+when syntactically you are required to have a line of code after a colon
+such as after defining a class name, after an if statement, etc. But you don't
+want to write that piece of code yet.
 '''
 
+
+
+# PART 2.2: EXTEND: ADD NEW METHOD
+# In the Manager class, add a method that only exists for the manager called
+# give_praise. Put a paramater in for an employee object. The method should
+# just return a string that says "You're doing great, <employee name>!"
+# Create a Manager object and call give_prase
+''' method added above'''
+
+# PART 2.3: CUSTOMIZE: OVERRIDE EXISTING METHOD
+# In the Manager class, add a method called give_raise (the same name as the
+# method in the Employee class). However, managers get a 10% bonus to whatever
+# raise is given to them (but they are still subject to the 20k cutoff).
+# Discuss using this method without super() and with super().
+
+''' method added above'''
+
+
+# PART 2.4: CUSTOMIZE: OVERRIDE THE CONSTRUCTOR
+# Override the constructor in the Manager class. Make it so that Managers have
+# an instance variable for department, describing which department they are
+# over. Use super() to get access to all of the other instance variables
+
+''' method added above '''
