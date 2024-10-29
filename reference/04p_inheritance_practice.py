@@ -32,75 +32,102 @@ class LibraryMember:
         self.checked_out_books = []
 
     def check_out_book(self, book):
-        if len(self.checked_out_books) >= 3:
-            print(f"{self.name} cannot check out more than 3 books.")
+
+        limit = getattr(self, 'check_out_limit', 2)
+
+        if len(self.checked_out_books) >= limit:
+            print(f"{self.name} cannot check out more than {limit} books.")
         elif book.is_available is False:
             print(f"The book '{book.title}' is currently not available.")
         else:
             book.is_available = False
             self.checked_out_books.append(book)
-            print(f"{self.name} has checked out '{book.title}'.")
+            print(f"{self.name} has checked out '{book.title}'. They now have {len(self.checked_out_books)} book(s) checked out.")
 
     def return_book(self, book):
         if book in self.checked_out_books:
             book.is_available = True
             self.checked_out_books.remove(book)
-            print(f"{self.name} has returned '{book.title}'.")
+            print(f"{self.name} has returned '{book.title}'. They now have {len(self.checked_out_books)} book(s) checked out.")
         else:
             print(f"{self.name} cannot return a book they haven't checked out.")
 
+book_1 = Book("Pride and Prejudice", "Jane Austen")
+book_2 = Book("Moby-Dick", "Herman Melville")
+book_3 = Book("Great Expectations", "Charles Dickens")
+book_4 = Book("War and Peace", "Leo Tolstoy")
+book_5 = Book("The Great Gatsby", "F. Scott Fitzgerald")
+book_6 = Book("Crime and Punishment", "Fyodor Dostoevsky")
+book_7 = Book("Jane Eyre", "Charlotte Brontë")
+book_8 = Book("Wuthering Heights", "Emily Brontë")
+book_9 = Book("The Odyssey", "Homer")
+book_10 = Book("To Kill a Mockingbird", "Harper Lee")
+
 
 # YOUR TASK:
-# Create a new class called PremiumLibraryMembers.
-# They should be the same as LibraryMembers, except they also have an instance
-# variable called "check_out_limit". The default is 5, but can be increased
-# beyond that potentially.
+# Create a new class PremiumLibraryMembers that inherits from LibraryMember
+# class variabes:
+#   starting_check_out_limit = 3
+# instance variables:
+#   - all those from LibraryMembers
+#   - check_out_limit (should be equal to starting_check_out_limit)
+#   - all_time_num_checked_out (should be 0 to start)
+#
+# Make it so that when PremiumLibraryMembers check out a book, it uses
+# their check_out_limit instead of the default 2 that normal LibraryMembers
+# have. It should also update the all_time_num_checked_out number each time
+# they succesfully check out a book.
+# Create a PremiumLibraryMember and show that they can check out
+# 3 books instead of just 2.
 
-# This means that when they try to check out a book, they should use their
-# check_out_limit variable as the limit
-# instead of the standard 3 that is applied to normal Library Members.
-
-# Write the functionality for this and make a LibraryMember and
-# PremiumLibraryMember object to test the functionality.
+# BONUS IMPROVEMENTS
+# 1. Can you figure out a way to write check_out_book so that you dont repeat
+#    nearly all the code from LibraryMember in PremiumLibraryMember? Some ideas
+#    would be using super(), probably with either an extra parameter, or using
+#    a function like getattr() (look it up!)
+#
+# 2. Add a method to PremiumLibraryMember called calculate_check_out_limit that
+#    increases the check_out_limit by one each time a PremiumLibraryMember
+#    checks out 4 books (so if they have checked out 4 their limit should be 4,
+#    if they've checked out 8 their limit should be 5, if they've checked out
+#    12 their limit should be 6, etc.)
 
 class PremiumLibraryMember(LibraryMember):
-    def __init__(self, name, check_out_limit=5):
+    starting_check_out_limit = 3
+    def __init__(self, name):
         super().__init__(name)
-        self.check_out_limit = check_out_limit
+        self.check_out_limit = PremiumLibraryMember.starting_check_out_limit
+        self.all_time_num_checked_out = 0
 
     def check_out_book(self, book):
-        if len(self.checked_out_books) >= self.check_out_limit:
-            print(f"{self.name} cannot check out more than {self.check_out_limit} books.")
-        elif book.is_available is False:
-            print(f"The book '{book.title}' is currently not available.")
-        else:
-            book.is_available = False
-            self.checked_out_books.append(book)
-            print(f"{self.name} has checked out '{book.title}'.")
+        initial_book_count = len(self.checked_out_books) # to see if all time increased
+        super().check_out_book(book)
 
-# Testing functionality
-book1 = Book("Python Programming", "Jane Doe")
-book2 = Book("Learning Python", "John Smith")
-book3 = Book("Advanced Python", "Alex Johnson")
-book4 = Book("Python for Data Science", "Maria Garcia")
-book5 = Book("Python and Machine Learning", "An Nguyen")
-book6 = Book("Introduction to Python", "Bao Tran")
+        if len(self.checked_out_books) > initial_book_count: # if their length is higher, increase all time count
+            self.all_time_num_checked_out += 1
 
-member = LibraryMember("Regular Joe")
-premium_member = PremiumLibraryMember("VIP Anna", 7)
+        self.calculate_check_out_limit() # calculate a new check out limit if it increased.
+
+    def calculate_check_out_limit(self):
+        increase_amount = self.all_time_num_checked_out // 4
+        self.check_out_limit = PremiumLibraryMember.starting_check_out_limit + increase_amount
+
+
+james_member = LibraryMember("James")
+anna_prem_member = PremiumLibraryMember("Anna")
 
 # Regular member checking out books
-member.check_out_book(book1)
-member.check_out_book(book2)
-member.check_out_book(book3)
-member.check_out_book(book4)  # Should not be allowed
+james_member.check_out_book(book_1)
+james_member.check_out_book(book_2)
+james_member.check_out_book(book_3)
+james_member.check_out_book(book_4)  # Should not be allowed
 
 # Premium member checking out books
-premium_member.check_out_book(book4)
-premium_member.check_out_book(book5)
-premium_member.check_out_book(book6)
-premium_member.check_out_book(book1)  # Should not be allowed as book1 is already checked out and not available
+anna_prem_member.check_out_book(book_4)
+anna_prem_member.check_out_book(book_5)
+anna_prem_member.check_out_book(book_6)
+anna_prem_member.check_out_book(book_7)  # won't work
+anna_prem_member.return_book(book_6)
+anna_prem_member.check_out_book(book_7)  # now can work
+anna_prem_member.check_out_book(book_8) # limit has increased
 
-# Returning books
-member.return_book(book1)
-premium_member.check_out_book(book1)  # Should now be allowed

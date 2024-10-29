@@ -29,16 +29,10 @@ books. You will practice aggregation by having LibraryMember objects maintain
 a list of Book objects they have checked out
 '''
 
-# PART 1: DEFINE A BOOK CLASS
-# Create the Book Class: Start by defining a Book class with a constructor
-# (__init__ method). Each book should have title and author attributes passed
-# as arguments to the constructor. Include an is_available attribute that
-# tracks whether the book is available for checkout. Set it equal to True in
-# the constructor.
-
-# Create at least three Book objects with different titles and authors to test
-# your class.
-
+# PART 1: DEFINE A BOOK CLASS (GIVEN TO YOU)
+# You are provided with a Book class with 3 instance variables:
+#   title, author, is_available
+# Book instances are already created for you.
 
 class Book:
     def __init__(self, title, author):
@@ -54,11 +48,13 @@ book_4 = Book("To Kill a Mockingbird", "Harper Lee")
 
 
 # PART 2: DEFINE THE LIBRARYMEMBER CLASS
-# Define a LibraryMember class with a constructor that accepts a name as an
-# argument. Include an attribute to store a list of books that the member
-# has checked out. Set it equal to an empty list.
-
-# Create at least two LibraryMember objects.
+# Define a LibraryMember class. For now, just make it have instance variables
+# of name and checked_out_books. Make name have a corresponding parameter,
+# but just set checked_out_books equal to an empty list.
+#
+# Create two LibraryMember objects. Append a book or two to each
+# LibraryMember's checked_out_books list. Print out the title of the first
+# book in each LibraryMember's list.
 
 
 class LibraryMember:
@@ -67,20 +63,21 @@ class LibraryMember:
         self.checked_out_books = []
 
     def check_out_book(self, book):
-        if len(self.checked_out_books) >= 3:
-            print(f"{self.name} cannot check out more than 3 books.")
+        limit = 2
+        if len(self.checked_out_books) >= limit:
+            print(f"{self.name} cannot check out more than {limit} books.")
         elif book.is_available is False:
             print(f"The book '{book.title}' is currently not available.")
         else:
             book.is_available = False
             self.checked_out_books.append(book)
-            print(f"{self.name} has checked out '{book.title}'.")
+            print(f"{self.name} has checked out '{book.title}'. They now have {len(self.checked_out_books)} book(s) checked out.")
 
     def return_book(self, book):
         if book in self.checked_out_books:
             book.is_available = True
             self.checked_out_books.remove(book)
-            print(f"{self.name} has returned '{book.title}'.")
+            print(f"{self.name} has returned '{book.title}'. They now have {len(self.checked_out_books)} book(s) checked out.")
         else:
             print(f"{self.name} cannot return a book they haven't checked out.")
 
@@ -88,6 +85,15 @@ class LibraryMember:
 member_alice = LibraryMember("Alice")
 member_john = LibraryMember("John")
 
+member_alice.checked_out_books.append(book_1)
+
+member_john.checked_out_books.append(book_2)
+
+# printing out book titles
+print(member_alice.checked_out_books[0].title)
+print(member_john.checked_out_books[0].title)
+member_john.checked_out_books.clear()
+member_alice.checked_out_books.clear()
 
 # PART 3: IMPLEMENT CHECK OUT LOGIC
 # Add a check_out_book method to the LibraryMember class. This method should
@@ -95,26 +101,30 @@ member_john = LibraryMember("John")
 # checks:
 #   1. Verify if the book is available (is_available is True). If the book is
 #      not available, print a message indicating it cannot be checked out.
-#   2. Ensure that a member cannot check out more than 3 books.
-#      If attempting to check out more, print an appropriate message.
+#   2. Ensure that a member cannot check out more than 2 books.
+#      If attempting to check out more, print:
+#       "<name> cannot check out more than 2 books.""
 
 # If the book is available and the member has not exceeded the limit, mark the
-# book as not available (is_available = False), and add it to the member's list
-# of checked out books.
+# book as unavailable (is_available = False), and add it to the member's list
+# of checked out books. Print out this message:
+#   "<name> has checked out '<book title>'. They now have <num checked out>
+#    book(s) checked out."
 
 ''' See above for the check_out_method '''
 
 # PART 4: TESTING CHECK_OUT_BOOK
+# Comment out the code from Part 2 or clear the LibraryMember's lists before
+# doing this. 
 # Add some book objects to a LibraryMember's book list until they get a
 # message that they can't check out any more books. try looping through
 # the list of books of a LibraryMember and printing out their title.
-# Then, try checkign out a book that has already been checked out to a 
+# Then, try checking out a book that has already been checked out to a 
 # different LibraryMember
 
 member_alice.check_out_book(book_1)  # Should succeed
 member_alice.check_out_book(book_2)  # Should succeed
-member_alice.check_out_book(book_3)  # Should succeed
-member_alice.check_out_book(book_4)  # Should fail (more than 3 books)
+member_alice.check_out_book(book_3)  # Should fail
 
 for book in member_alice.checked_out_books:
     print(book.title)
@@ -137,10 +147,3 @@ but doesn't teach any new aggregation concepts.
 # Return a book and try checking out another one
 member_alice.return_book(book_2)
 member_john.check_out_book(book_2)  # Should now succeed
-
-
-
-
-
-
-

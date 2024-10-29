@@ -1,8 +1,10 @@
-# optional stuff that will clear the window each time you run it.
 import os
 import platform
 
 def clear_screen():
+    """
+    Clears the terminal screen to improve readability.
+    """
     if platform.system() == 'Windows':
         os.system('cls')
     else:
@@ -10,42 +12,15 @@ def clear_screen():
 
 clear_screen()
 
-###########################
-# START READING HERE
-###########################
+# ====================
+# INHERITANCE PRACTICE
+# ====================
 
-'''
-Implementing a Vehicle Hierarchy in Python
-
-Step 1: Define the Base Class Vehicle
-Create a class named Vehicle. This class will serve as the base class for all vehicle types.
-Add an __init__ method. This method should initialize the make, model, and year attributes.
-Implement a start method. This method should print a message indicating that the vehicle has started.
-Implement a stop method. This method should print a message indicating that the vehicle has stopped.
-'''
-
-'''
-Step 2: Create Derived Classes for Different Vehicle Types
-Create a class named Car that inherits from Vehicle.
-    You don't need to add any new methods or attributes for this class yet.
-    Just make sure it inherits the properties and methods from Vehicle. (you can use the keyword "pass" after the class name)
-
-Create a class named Truck that also inherits from Vehicle.
-    Add a new attribute named cargo_capacity to the __init__ method, which represents the cargo capacity of the truck.
-    Override the start method to include a message that also mentions the cargo capacity when the truck starts.
-
-Create a class named Motorcycle that inherits from Vehicle.
-    Add a new method named rev_engine, which prints a message indicating the motorcycle's engine is revving.
-'''
-
-'''
-Step 3: Test Your Vehicle Hierarchy
-Instantiate an object of each vehicle class (Car, Truck, Motorcycle) with appropriate attributes.
-
-Call the start and stop methods on each of your vehicle objects.
-Call the rev_engine method on your motorcycle object.
-Print the make, model, and year of each vehicle.
-'''
+# Step 1: Define Base Class `Vehicle`
+# - Initialize make, model, and year attributes in `__init__`.
+# - Implement `start` and `stop` methods that return messages.
+#       - "<make> <model> (<year>) has started."
+#       - "<make> <model> (<year>) has stopped."
 
 class Vehicle:
     def __init__(self, make, model, year):
@@ -54,10 +29,17 @@ class Vehicle:
         self.year = year
 
     def start(self):
-        print(f"{self.make} {self.model} ({self.year}) has started.")
+        return f"{self.make} {self.model} ({self.year}) has started."
 
     def stop(self):
-        print(f"{self.make} {self.model} ({self.year}) has stopped.")
+        return f"{self.make} {self.model} ({self.year}) has stopped."
+
+# Step 2: Create Derived Classes
+# - `Car`: inherits `Vehicle` without adding new attributes or methods.
+# - `Truck`: inherits `Vehicle`, adds `cargo_capacity` attribute in `__init__`,
+#   overrides `start` method to include cargo capacity in the message.
+# - `Motorcycle`: inherits `Vehicle`, adds `rev_engine` method.
+#       - "<make> <model> (<year>) engine is revving loudly!"
 
 class Car(Vehicle):
     pass
@@ -68,25 +50,28 @@ class Truck(Vehicle):
         self.cargo_capacity = cargo_capacity
 
     def start(self):
-        print(f"{self.make} {self.model} ({self.year}) with cargo capacity {self.cargo_capacity}kg has started.")
+        base_message = super().start()
+        return f"{base_message} Cargo capacity: {self.cargo_capacity}kg."
 
 class Motorcycle(Vehicle):
     def rev_engine(self):
-        print(f"{self.make} {self.model} ({self.year}) engine is revving loudly!")
+        return f"{self.make} {self.model} ({self.year}) engine is revving loudly!"
 
-# Testing
+# Step 3: Test Vehicle Hierarchy
+# - Instantiate `Car`, `Truck`, and `Motorcycle` with appropriate attributes.
+# - Call `start`, `stop`, and `rev_engine` (where applicable) on each instance.
+# - Print the make, model, and year of each vehicle.
+
 car = Car("Toyota", "Corolla", 2020)
 truck = Truck("Ford", "F-150", 2019, 1000)
 motorcycle = Motorcycle("Harley-Davidson", "Street 750", 2021)
 
-car.start()
-car.stop()
+print(car.start())
+print(car.stop())
 
-truck.start()
-truck.stop()
+print(truck.start())
+print(truck.stop())
 
-motorcycle.start()
-motorcycle.rev_engine()
-motorcycle.stop()
-
-
+print(motorcycle.start())
+print(motorcycle.rev_engine())
+print(motorcycle.stop())
