@@ -122,7 +122,7 @@ class LibraryMember:
     library_name = "Provo Library"
 
     def __init__(self, name):
-        self.name = nameß
+        self.name = name
 
     def describe_role(self):
         return f"{self.name} is a library member."
