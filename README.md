@@ -5,8 +5,6 @@ This is how the repository is laid out:
 - The `reference` folder contains the same code but with all the answers.
 - `'''triple quote comments'''` contain explanations of concepts.
 - `# single line comments` contain instructions for practice problems.
-### Topics covered:
-TBD
     
 ## Prompt for Reviewing with AI
 Put the following prompt into your preferred generative AI service:
