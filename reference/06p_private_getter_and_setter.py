@@ -28,26 +28,26 @@ class Book:
 class LibraryMember:
     def __init__(self, name):
         self.name = name
-        self.checked_out_books = []
+        self.__checked_out_books = []
 
     def check_out_book(self, book):
 
         limit = 2
 
-        if len(self.checked_out_books) >= limit:
+        if len(self.__checked_out_books) >= limit:
             print(f"{self.name} cannot check out more than {limit} books.")
         elif book.is_available is False:
             print(f"The book '{book.title}' is currently not available.")
         else:
             book.is_available = False
-            self.checked_out_books.append(book)
-            print(f"{self.name} has checked out '{book.title}'. They now have {len(self.checked_out_books)} book(s) checked out.")
+            self.__checked_out_books.append(book)
+            print(f"{self.name} has checked out '{book.title}'. They now have {len(self.__checked_out_books)} book(s) checked out.")
 
     def return_book(self, book):
-        if book in self.checked_out_books:
+        if book in self.__checked_out_books:
             book.is_available = True
-            self.checked_out_books.remove(book)
-            print(f"{self.name} has returned '{book.title}'. They now have {len(self.checked_out_books)} book(s) checked out.")
+            self.__checked_out_books.remove(book)
+            print(f"{self.name} has returned '{book.title}'. They now have {len(self.__checked_out_books)} book(s) checked out.")
         else:
             print(f"{self.name} cannot return a book they haven't checked out.")
 
@@ -59,10 +59,12 @@ book_4 = Book("War and Peace", "Leo Tolstoy")
 james_member = LibraryMember("James")
 
 # this member is checking out 4 books when the limit should be 2
-james_member.checked_out_books.append(book_1)
-james_member.checked_out_books.append(book_2)
-james_member.checked_out_books.append(book_3)
-james_member.checked_out_books.append(book_4) 
+
+# THIS CODE NOW WILL NO LONGER WORK, WHICH IS WHAT WE WANT
+# james_member.checked_out_books.append(book_1)
+# james_member.checked_out_books.append(book_2)
+# james_member.checked_out_books.append(book_3)
+# james_member.checked_out_books.append(book_4) 
 
 # 1. CONTINUED
 # Notice that `james_member` is adding 4 books to his list, but the logic in
@@ -74,7 +76,7 @@ james_member.checked_out_books.append(book_4)
 # `james_member`'s book list. You might need to clear out his list or comment
 # out the previously provided code first.
 
-james_member.checked_out_books.clear()
+james_member.__checked_out_books.clear()
 
 james_member.check_out_book(book_1)
 james_member.check_out_book(book_2)
