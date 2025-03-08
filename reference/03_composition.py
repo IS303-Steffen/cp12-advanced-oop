@@ -12,9 +12,9 @@ def clear_screen():
 
 clear_screen()
 
-# ===============================================
-# COMPOSITION - OBJECT PASSED INTO ANOTHER OBJECT
-# ===============================================
+# ==================================================
+# COMPOSITION - OBJECT CREATED INSIDE ANOTHER OBJECT
+# ==================================================
 
 '''
 OVERVIEW
