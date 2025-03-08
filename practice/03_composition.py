@@ -13,7 +13,7 @@ def clear_screen():
 clear_screen()
 
 # ===============================================
-# AGGREGATION - OBJECT PASSED INTO ANOTHER OBJECT
+# COMPOSITION - OBJECT PASSED INTO ANOTHER OBJECT
 # ===============================================
 
 '''

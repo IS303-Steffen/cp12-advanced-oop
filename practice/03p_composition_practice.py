@@ -13,7 +13,7 @@ def clear_screen():
 clear_screen()
 
 # ======================
-# AGGREGATION - PRACTICE
+# COMPOSITION - PRACTICE
 # ======================
 
 # 1. PRACTICE
