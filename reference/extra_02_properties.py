@@ -57,7 +57,7 @@ def name(self):
 # than zero. Also create a property called area that computes the area of
 # the circle 3.14159 * self.__radius ** 2 and returns it.
 # Make sure that you are calling the setter method when you first create the
-# circle to make sure that 
+# circle to make sure that the radius is a valid positive value.
 
 class Circle:
     def __init__(self, radius):
