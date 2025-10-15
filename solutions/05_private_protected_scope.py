@@ -1,15 +1,4 @@
-import os
-import platform
-
-def clear_screen():
-    """
-    Clears the terminal screen to make it easier to follow along with code.
-    """
-    if platform.system() == 'Windows':
-        os.system('cls')
-    else:
-        os.system('clear')
-
+from helper_functions import clear_screen
 clear_screen()
 
 # =========================

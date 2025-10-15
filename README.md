@@ -1,10 +1,9 @@
 #### Class Practice
-# Advanced OOP
 <h4><a href="https://www.youtube.com/playlist?list=PLSHyB4s0vJ9rp1cvFgc3T6Ms396jIfkUt" target="_blank"> Link to YouTube recordings</a></h4>
 
 This is how the repository is laid out:
 - The `practice` folder contains instructions without any answers.
-- The `reference` folder contains the same code but with all the answers.
+- The `solutions` folder contains the same code but with all the answers.
 - `'''triple quote comments'''` contain explanations of concepts.
 - `# single line comments` contain instructions for practice problems.
     

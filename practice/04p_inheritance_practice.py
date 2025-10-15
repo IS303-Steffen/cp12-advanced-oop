@@ -1,15 +1,4 @@
-import os
-import platform
-
-def clear_screen():
-    """
-    Clears the terminal screen to make it easier to follow along with code.
-    """
-    if platform.system() == 'Windows':
-        os.system('cls')
-    else:
-        os.system('clear')
-
+from helper_functions import clear_screen
 clear_screen()
 
 # ====================
@@ -89,6 +78,6 @@ book_10 = Book("To Kill a Mockingbird", "Harper Lee")
 #    increases the check_out_limit by one each time a PremiumLibraryMember
 #    checks out 4 books (so if they have checked out 4 their limit should be 4,
 #    if they've checked out 8 their limit should be 5, if they've checked out
-#    12 their limit should be 6, etc.)
+#    12 their limit should be 6, etc.)  You might find floor division // useful.
 
 
