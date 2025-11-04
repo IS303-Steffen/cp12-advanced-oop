@@ -1,29 +1,18 @@
-import os
-import platform
-
-def clear_screen():
-    """
-    Clears the terminal screen to improve readability.
-    """
-    if platform.system() == 'Windows':
-        os.system('cls')
-    else:
-        os.system('clear')
-
+from helper_functions import clear_screen
 clear_screen()
 
 # ====================
 # INHERITANCE PRACTICE
 # ====================
 
-# Step 1: Define Base Class `Vehicle`
+# Step 1: Define Parent Class `Vehicle`
 # - Initialize make, model, and year attributes in `__init__`.
 # - Implement `start` and `stop` methods that return messages.
 #       - "<make> <model> (<year>) has started."
 #       - "<make> <model> (<year>) has stopped."
 
 
-# Step 2: Create Derived Classes
+# Step 2: Create Child Classes
 # - `Car`: inherits `Vehicle` without adding new attributes or methods.
 # - `Truck`: inherits `Vehicle`, adds `cargo_capacity` attribute in `__init__`,
 #   overrides `start` method to include cargo capacity in the message.

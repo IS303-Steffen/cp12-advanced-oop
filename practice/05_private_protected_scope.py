@@ -45,22 +45,22 @@ private     __var_name   confine access to variables
                          to just the class
 '''
 
-class Account: # name of the class is Account
-    total_money = 0 # this is a class variable
+class Account:
+    total_money = 0
 
     def __init__(self, account_holder, balance = 0):
-        self._account_holder = account_holder # these are the instance variables
-        self.__balance = balance
+        self.account_holder = account_holder 
+        self.balance = balance
 
-        Account.total_money = Account.total_money + balance # this updates the class variable
+        Account.total_money = Account.total_money + balance
 
     def deposit_or_withdraw(self, amount):
-        self.__balance = self.__balance + amount
+        self.balance = self.balance + amount
 
         Account.total_money = Account.total_money + amount
 
     def display_balance(self):
-        print(f"Account holder: {self._account_holder} has a current balance of: {self.__balance}")
+        print(f"Account holder: {self.account_holder} has a current balance of: {self.balance}")
 
 scrooge = Account("Scrooge McDuck", 100_000_000)
 
